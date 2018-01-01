@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration process_explicitly_annotated="false" />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../out/production/jackdan_spring" />
+    <output-test url="file://$MODULE_DIR$/../out/test/jackdan_spring" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/com/jackdan/spring/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/Resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/Resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/Resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/src/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:5.0.1.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="4" level="application" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:5.0.1.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:5.0.1.RELEASE" level="project" />
+  </component>
+</module>
