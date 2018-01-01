@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- dao interface name = namespace -->
+<mapper namespace="com.tarena.dao.EmpDao">
+    <!-- Query all employer -->
+    <!-- interface function name = id -->
+    <select id="findAll" resultType="com.tarena.entity.Emp">
+        SELECT * FROM e_tmp;
+    </select>
+</mapper>
+
