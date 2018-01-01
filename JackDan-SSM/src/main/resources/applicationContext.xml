@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <!-- 注解扫描 -->
+    <context:component-scan base-package="com.jackdan.controller, com.jackdan.service.impl"></context:component-scan>
+
+    <!-- 页面、controller相关 -->
+
+    <!-- 注解映射器和注解适配器可以使用<mvc:annotation-driven /> 代替, 默认注册了注解映射器和注解适配器等bean. -->
+
+    <mvc:annotation-driven />
+
+    <!-- ViewResolver视图解析器 -->
+    <!--
+        InternalResourceViewResolver: 支持JSP视图解析 viewClass: JstlView表示JSP模板页面需要使用JSTL标签库,
+        所以classpath中必须包含jstl的相关jar包; prefix和suffix: 查找视图页面的前缀和后缀, 最终视图地址为:
+        前缀+逻辑视图名+后缀, 逻辑视图名需要在controller中返回ModelAndView指定,
+        比如逻辑视图名为hello, 则最终返回的jsp视图地址 "WEB-INF/jsp/hello.jsp"
+     -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- json数据传输
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+            </list>
+        </property>
+    </bean>
+    -->
+
+    <!-- Service、Dao相关 -->
+
+    <!-- 被扫描的包要有mapper接口和对应的xml配置文件, 扫描出来的mapper自动让spring注册, id为第一个字母小写的类名 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 会话工厂 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <!-- 扫描包, 多个包用逗号隔开 -->
+        <property name="basePackage" value="com.jackdan.dao" />
+    </bean>
+
+    <!-- 数据库相关 -->
+    <!--
+        引入properties配置文件
+    -->
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>classpath:jdbc.properties</value>
+        </property>
+    </bean>
+
+    <bean id="dataSource" destroy-method="close"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+    </bean>
+
+    <!-- 创建sessionFactory引入database -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 注入dataSource -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 配置mybatis 可以不用了 -->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
+
+        <!-- 配置分页插件 -->
+        <property name="plugins">
+            <list>
+                <bean class="com.github.pagehelper.PageHelper"></bean>
+            </list>
+        </property>
+
+        <property name="mapperLocations" value="classpath:com/jackdan/mapper/*Mapper.xml" />
+    </bean>
+
+    <!-- 创建事物管理, 并注入sessionFactory -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 声明事务 -->
+    <tx:advice transaction-manager="transactionManager" id="tx">
+        <tx:attributes>
+            <tx:method name="insert*" read-only="false" />
+            <tx:method name="update*" read-only="false" />
+            <tx:method name="delete*" read-only="false" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- aop -->
+    <aop:config>
+        <aop:pointcut id="perform" expression="execution(* com.jackdan.dao.*.*(..))" />
+        <aop:advisor advice-ref="tx" pointcut-ref="perform" />
+    </aop:config>
+</beans>
