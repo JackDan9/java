@@ -401,7 +401,114 @@ public class Revert {
 ```
 - 取反运算符(`!`)是一个单元操作符, 使用时操作数放在它的右边. 它只能用在boolean变量上.
 
+------
 
+### 基本数据类型运算的难点:
 
+#### 强制类型转换:
+```java
+public class ForceConvert {
+	public static void main(String[] args) { // main
+		double doubleValue = 9.9; // create a double variable and an int variable
+		int intValue = 0;
+		intValue = doubleValue;
+		System.out.println(intValue);
+	}
+}
+```
+- `javac ForceConvert.java`
+```
+C:\projects\java\JavaTest\src\HelloWorld>javac ForceConvert.java
+ForceConvert.java:6: 错误: 不兼容的类型: 从double转换到int可能会有损失
+                intValue = doubleValue;
+                           ^
+1 个错误
+```
+- 这说明不能把`double`类型的数据值赋值给`int`类型. 那可不可以把`int`类型的数据赋值给`double`类型了?
+```
+public class DefaultConvert {
+	public static void main(String[] args) { // main
+		double doubleValue = 0; // create a double variable and an int variable
+		int intValue = 5;
+		doubleValue = intValue;
+		System.out.println(intValue);
+	}
+}
+```
+- 运行状态:
+```
+C:\projects\java\JavaTest\src\HelloWorld>javac ForceConvert.java
 
+C:\projects\java\JavaTest\src\HelloWorld>java ForceConvert
+5.0
+
+C:\projects\java\JavaTest\src\HelloWorld>
+```
+- 以上可以说明可以把`int`类型的数据值赋值给`double`类型, 从数据类型的范围可以得出`double`范围攘括了`int`的范围, 所以默认的话可以把小范围的数据类型的数据值赋值给大范围的数据类型.
+- 如果想把大范围的数据类型赋值给小范围的数据类型, 该怎么办了？
+```
+public class ForceConvert {
+	public static void main(String[] args) { // main
+		double doubleValue = 9.9; // create a double variable and an int variable
+		int intValue = 0;
+		intValue = (int)doubleValue;
+		System.out.println(intValue);
+	}
+}
+```
+- 命令行运行状态:
+```
+C:\projects\java\JavaTest\src\HelloWorld>javac ForceConvert.java
+
+C:\projects\java\JavaTest\src\HelloWorld>java ForceConvert
+9
+
+C:\projects\java\JavaTest\src\HelloWorld>
+```
+- `intValue = (int)doubleValue;`——强制类型转换, 语法是**"(" + "目标类型" + ")" + "想要转换的值" .
+- `(int)doubleValue`就是将一个`double`类型的变量`doubleValue`的值转换成`int`的值.
+- 但是上述的输出结果可能会大家会想不通?为什么不是10而是9了？这是Java的特殊处理.
+- 在Java中如果将一个浮点数强制转换为一个整数时, Java是不会进行四舍五入操作的, 而是直接将浮点数的小数部分全部删除.
+- 也就是说, 如果将0.9进行强制类型转换, 那么得到的结果也是0. 很多人都不能接收, 所以可以书写四舍五入的代码:
+```
+public class ForceConvert {
+	public static void main(String[] args) {
+		double doubleValue = 0.9;
+		int intValue = 0;
+		intValue = (int)(doubleValue + 0.5);
+		System.out.println(intValue);
+	}
+}
+```
+- 命令行运行结果:
+```
+C:\projects\java\JavaTest\src\HelloWorld>javac ForceConvert.java
+
+C:\projects\java\JavaTest\src\HelloWorld>java ForceConvert
+1
+
+C:\projects\java\JavaTest\src\HelloWorld>
+```
+
+- 整数类型之间, 如果将一个高精度类型的值赋值给一个低精度类型的变量, 也是需要进行强制类型转换的.
+```
+public class ForceConvertIntType {
+	public static void main(String[] args) {
+		byte byteValue = 0; // create an int variable and a byte varibale.
+		int intValue = 9;
+		byteValue = (byte)intValue;
+		System.out.println(byteValue);
+	}
+}
+```
+- 对于Java中的数字类型, Java中允许直接将一个低精度的值赋给高精度的变量(比上面更合理的说法).
+- 如果需要将一个高精度的值转换成低精度的值时, 需要对高精度的值进行强制类型转换. Java中强制类型转换的语法是:**"(" + "目标类型" + ")" + "想要转换的值"**.
+- 在将一个高精度的值转换成低精度的值时, 需要确定这个高精度类型变量的值能够在低精度中表示, 否则, 结果可能是意料之外的.
+
+#### 类型的转换在运算中悄悄的进行:
+- 在很多运算的情况下, 很可能需要将一个`int`类型的变量和一个`double`类型的变量相加. 
+- 其实在对两个不同类型的变量进行运算时, Java会先将精度低的变量转换成高精度的变量(Java可以将高精度变量值转换成低精度变量值, 也可以反过来转换). 然后对两个同类型的变量进行运算, 最后返回的精度也是高精度的.
+```
+
+```
 
