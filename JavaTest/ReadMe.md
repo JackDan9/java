@@ -508,7 +508,16 @@ public class ForceConvertIntType {
 #### 类型的转换在运算中悄悄的进行:
 - 在很多运算的情况下, 很可能需要将一个`int`类型的变量和一个`double`类型的变量相加. 
 - 其实在对两个不同类型的变量进行运算时, Java会先将精度低的变量转换成高精度的变量(Java可以将高精度变量值转换成低精度变量值, 也可以反过来转换). 然后对两个同类型的变量进行运算, 最后返回的精度也是高精度的.
-```
+```java
+public class CountAndConvert {
+	public static void main(String[] args) {
+		double doubleValue = 9.9;
+		int intValue = 9;
 
+		double result = doubleValue + intValue;
+		System.out.println(result);
+	}
+}
 ```
+- 将`double`的变量`doubleValue`和`int`的变量`intValue`进行相加.
 
