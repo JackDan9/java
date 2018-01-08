@@ -519,5 +519,118 @@ public class CountAndConvert {
 	}
 }
 ```
-- 将`double`的变量`doubleValue`和`int`的变量`intValue`进行相加.
+- 将`double`的变量`doubleValue`和`int`的变量`intValue`进行相加. Java在运算的时候发现这两个操作数的类型是不一致的(一个为`int`, 一个为`double`), Java首先找到的是精度低的类型变量, 也就是`intValue`, 然后将它的值转换为精度高的类型, 在代码中就是`double`类型.
+- 然后Java就会将两个`double`的变量值进行相加. 加法执行的结果也是`double`类型的数据. 如果在这里把result的值设置为`int`, 则会发生前面**强制类型转换**中提示的错误.
+```java
+C:\projects\java\JavaTest\src\HelloWorld>javac ForceConvert.java
+ForceConvert.java:6: 错误: 不兼容的类型: 从double转换到int可能会有损失
+                intValue = doubleValue;
+                           ^
+1 个错误
+```
+- 同样地, 对于其他运算符`-`, `*`, `/`以及`%`也满足运算类型的转换, Java对于它们做的是同样的处理. 运算结果的类型就是所有操作数中精度最高的那个.
+- 如果直接写一个数字, 那么它是什么类型?
+```java
+public class AutoConvert {
+	public static void main(String[] args) {
+		byte byteValue = 9/4;
+	}
+}
+```
+- 大家看到上面的代码, 可能会疑惑, 对于在程序中直接出现的数字, 如果是整数, Java会使用`int`类型变量来表示它, 如果是浮点数, Java就会使用`double`的类型去表示它.上面程序代码中的运算结果岂不是一个`int`类型吗? 但是jackdan运行运行之后发现并没有出现类型转换的错误, 这又是为什么了?.
+- 实际上, 如果jackdan电脑上的JDK版本是旧版本的话, 其实以上的程序代码会报出类型转换错误.
+- 最新的JDK版本, Java会自动将运算的结果转换为我们想要的结果(这正是jackdan所想要的).
+- 所以上面的程序代码Java会自动把运算结果转换成`byte`数据类型.
+```java
+public class AutoConvert {
+	public static void main(String[] args) {
+		// byte byteValue = 9/4;
+		int intValue = 9;
+		byte byteValue = intValue/4;
+
+	}
+}
+```
+- 运行代码结果:
+```java
+AutoConvert.java:5: 错误: 不兼容的类型: 从int转换到byte可能会有损失
+                byte byteValue = intValue/4;
+                                         ^
+1 个错误
+```
+- 因为在这里的`intValue`是一个**变量**, 而不是一个**直接的数值**.
+```java
+public class AutoConvert {
+	public static void main(String[] args) {
+		// byte byteValue = 9/4;
+		// int intValue = 9;
+		// byte byteValue = intValue/4;
+		double doubleValue = 9/4;
+		System.out.println(doubleValue);
+	}
+}
+```
+- 程序代码运行结果:
+```
+2.0
+```
+- 为什么是2.0?
+- 对于直接写在程序中的整数, Java是使用`int`来计算的. 
+- 所以, `9/4`就是两个`int`值的除法, 它不会保留小数部分, 所以它的值就是2.
+- 然后Java会将这个2转换为`double`类型并赋给`doubleValue`变量, 那么`doubleValue`变量就应该是`2.0`(对于浮点数, 就算小数部分是0也要加上, 以表示它是一个浮点数).
+- 当操作符的操作数有不同的精度时, Java会将低精度的操作数转换成高精度的操作数, 然后进行运算. 运算的结果也是高精度的值.
+- 对于直接出现在程序中的整数, Java会当作`int`类型进行处理; 对于浮点数, Java会当作`double`处理.
+
+#### 强制类型转换最优先:
+- **强制类型转换**的运算优先级**高于** **算数运算符**的.
+```java
+public class ForceConvert {
+	public static void main(String[] args) {
+		double doubleValue = 9.9;
+		int intValue = 0;
+		intValue = (int)doubleValue + 0.5;
+		System.out.println(intValue);
+	}
+}
+```   
+- 这可能会报出一个错误, 为什么了？
+- 因为Java中强制类型转换运算的优先级高于算数运算符. 所以`(int)doubleValue + 0.5`的运算顺序就是先把变量`doubleValue`强制类型转换成`int`类型, 然后再与`0.5`进行加法操作. `0.5`是一个`double`变量, 那么就是`int`变量和`double`变量进行加法运算, 所有报错了.
+- 强制类型转换运算的优先级高于算数运算.
+- 使用强制类型运算的时候, 一个好习惯是将转换的**变量**或者**表达式**用**小括号括起来**. 这样可以有效地避免出错, 而且可以让程序更加易读.
+
+#### 等号其实不简单:
+- 等号除了赋值还有更丰富的用法.
+```java
+public class ContinueAssign {
+	public static void main(String[] args) {
+		int a = 0;
+		int b = (a = 5);
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
+```
+- `int b = (a = 5);`
+- `a=5`不仅仅是完成了赋值, 它其实也会返回一个结果, 它的结果就是完成赋值操作后等号左边的变量值.所以它相当于:
+```java
+a = 5;
+int b = a;
+```
+- Java的等号有了这个功能就可以连续地给变量赋值了.
+```java
+public class UseInAssign {
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 6;
+		b = a+b;
+		System.out.println(b);
+	}
+}
+```
+- 等号(`=`)除了会完成操作以外, 也跟其他运算符一样, 会返回一个值.
+- 在等号左边的表达式中可以使用等号右边的变量.
+
+#### 小心使用浮点数:
+
+
 
