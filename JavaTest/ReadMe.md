@@ -747,5 +747,26 @@ public class UseAfterCreation {
 ```
 - Java会自上而下顺序处理方法中的代码, 在使用一个变量的时候, 必须将这个变量在前面的代码中创建出来.
 
+#### `String`——`char`串起的项链.
+- 在Java中, 用双引号将一串字符括起来, 这就创建了一个字符串.
+- 不要把字符串跟Java中的字符弄混了, 字符是使用单引号的.
+- 字符串类型在Java中是使用`String`表示的.
+- 在这里, `String`就好像介绍的`int`一样, 是代表一个类型.
+```java
+public class HelloWordPlus {
+	public static void main(String[] args) {
+		String sayHello = "Hello, JackDan";
+		System.out.println(sayHello);
+	}
+}
+```
+- 运行结果:
+```java
+Hello, JackDan
+```
+
+#### `String`类型的**"加法"**运算
+
+
 
 
