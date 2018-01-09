@@ -627,10 +627,125 @@ public class UseInAssign {
 	}
 }
 ```
-- 等号(`=`)除了会完成操作以外, 也跟其他运算符一样, 会返回一个值.
-- 在等号左边的表达式中可以使用等号右边的变量.
+- 等号(`=`)除了会完成赋值操作以外, 也跟其他运算符一样, 会返回一个值.
+- 在等号**左边的表达式**中可以使用等号**右边的变量**.
 
 #### 小心使用浮点数:
+- 在Java中浮点数其实是不可能精确地表示一个小数. 所以在用浮点数进行判断相等的时候`==`的时候可能会得到不一样的效果, 那我们如何判断两个浮点数的相等情况了?
+```java
+public class CompareUsingSub {
+	public static void main(String[] args) {
+		double a = 9 * 3.1415926 / 7.56789 * 1.145926;
+		double b = 9 * 3.1415926 / 7.56789 * 1.145926;
+		boolean equal = ((a - b) < 0.0000000001 || (b - a) < 0.0000000001);
+		System.out.println(equal);
+	}
+}
+```
+- 根据需要选择一个实际数来确定这个浮点数的精度是多少. 如果是商品价格, 那么`0.01`就可以了.
+- 但是这里直接所有`a == b`去判断也会返回`true`, 但是它可能也会出现`false`, 这个精度值的选择判断就是为了消除这个隐患.
+- 最好不要对浮点数进行相等比较. 需要使用它们的差的绝对值与一个大家想要的精度进行比较, 来判断两个浮点数是否相等.
+- 编程中一般使用`||`和`&&`.
+
+#### `boolean`和`char`:
+- `boolean`类型是可以使用相等符的.
+```java
+public class BooleanEqual {
+	public static void main(String[] args) {
+		boolean valueA = true;
+		boolean valueB = true;
+		boolean valueC = false;
+		boolean value = (valueA == valueB);
+		System.out.println(value);
+		value = (valueA == valueC);
+		System.out.println(value);
+	}
+}
+```
+- 运行结果:
+```
+true
+false
+```
+- `char`类型的使用:
+```java
+public class UsingChar {
+	public static void main(String[] args) {
+		char charA;
+		charA = 'A';
+		char charB = 'D';
+		System.out.println(charA);
+		System.out.println(charB);
+		char charC = 'D';
+		boolean equal = (charB == charC);
+		System.out.println(equal);
+	}
+}
+```
+- 运行结果是:
+```java
+A
+D
+true
+```
+- 给`char`变量赋值的语法是: **`char 变量名` + `=` + `'` + `一个字符` + `'` + `;`**(一个语句).
+- 在Java中单引号表示用来将一个字符括起来, 也就意味着表示**一个字符**.
+- 在Java中, 单引号中的内容**只能是一个字符.**如果单引号中有两个字符Java就会认为只是不合法(不符合语法的简称)的.
+- 用于`char`变量上最多的运算符就是赋值运算符`=`和相等运算符`==`. 
+- 其实, 还可以将`char`类型的变量当作是一个整数, 进行算术运算, 这就是后面会涉及到的**字符集编码.**
+- `System.out.print()`与`System.out.println()`相似, 也是将内容输出到控制台, 只不过前置没有换行符, 后者存在换行符.
+```java
+public class UsingChar {
+	public static void main(String[] args) {
+		char charA;
+		charA = 'A';
+		char charB = 'D';
+		System.out.print(charA);
+		System.out.printcharB);
+		char charC = 'D';
+		boolean equal = (charB == charC);
+		System.out.print(equal);
+	}
+}
+```
+- 运行结果:
+```java
+ADtrue
+```
+- Java中使用两个单引号将一个字符括起来, 表示一个`char`变量, 也就是一个字符. 单引号之间只能有一个字符, 这是因为`char`变量只能存储一个字符.
+- `System.out.println()`在输出内容之后, 还会输出回车换行符. `System.out.print()`则只负责输出内容.
+
+#### 不要使用还没有创建出来的变量:
+```java
+public class UseAfterCreation {
+	public static void main(String[] args) {
+		int a = 5;
+		int b = a+c;
+		int c = 7;
+	}
+}
+```
+- 运行结果:
+```java
+UseAfterCreation.java:4: 错误: 找不到符号
+                int b = a+c;
+                          ^
+  符号:   变量 c
+  位置: 类 UseAfterCreation
+1 个错误
+```
+- 在使用一个变量的时候, 它必须被创建了出来.
+```java
+public class UseAfterCreation {
+	public static void main(String[] args) {
+		int a = 5;
+		int c = 7;
+		int b = a+c;
+		// int c = 7;
+	}
+}
+```
+- Java会自上而下顺序处理方法中的代码, 在使用一个变量的时候, 必须将这个变量在前面的代码中创建出来.
 
 
 
