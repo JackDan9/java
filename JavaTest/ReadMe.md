@@ -766,7 +766,216 @@ Hello, JackDan
 ```
 
 #### `String`类型的**"加法"**运算
+- Java中的基本类型是"数据原子", 所有其他类型的数据都是由基本数据类型"组装"而成的。
+- 所以可以认为`String`类型就是将一定数量的`char`类型变量组装起来, 形成的一个新的类型。
+```java
+package HelloWorld;
 
+public class UsingString {
+    public static void main(String[] args) {
+        String emptyStr = "";
+        String str1 = "字符串中可以同时使用中文和English";
 
+        String str2 = "。";
+        String plusStr = str1 + str2;
+        System.out.println(plusStr);
+    }
+}
+```
+- 运行结果:
+```java
+字符串中可以同时使用中文和English。
 
+```
+- `str1 + str2`与**算术运算**中的加法不同。对于字符串相加, 其运算规则是**将两个字符串的内容拼接在一起**。
+- **加法**是字符串唯一允许的运算, 是Java对字符串类型的"特殊照顾"。
+- 其实可以通过其他相对"正统", 但是稍微麻烦的办法来实现两个字符串的拼接。
+- Java之所以特许使用加号将两个字符串拼接起来, 是因为**"将两个字符串进行拼接"**这个功能实在是太常用了, Java才会辛苦自己, 方便大家进行操作。
+- 当Java遇到使用**加号**`+`将两个字符串拼接起来时, Java会在背后将这个运算转换成**"正统"**的方式。
+- `String`并不是基本类型中的一种。虽然`String`的用法看上去像极了基本类型。
 
+#### `String`类型与**基本类型**的**"加法"**运算:
+```java
+package HelloWorld;
+
+public class StringAddPrimer {
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 7;
+        String str1 = "将数字的字符拼接到字符串中: " + a;
+        String str2 = a + b + "加法是从左到右运算的";
+        String str3 = "加法是从左到右运算的: " + a + b;
+        String str4 = "可以使用括号改变运算顺序: " + (a+b);
+        String str5 = "可以使用空字符将两个变量分隔开: " + a + " " + b;
+        System.out.println(str1);
+        System.out.println(str2);
+        System.out.println(str3);
+        System.out.println(str4);
+        System.out.println(str5);
+    }
+}
+```
+- 运行结果:
+```java
+将数字的字符拼接到字符串中: 5
+12加法是从左到右运算的
+加法是从左到右运算的: 57
+可以使用括号改变运算顺序: 12
+可以使用空字符将两个变量分隔开: 5 7
+
+```
+- 字符串(`String`)与`boolean`变量的**"加法"`+`**就是将`true`或者`false`拼接到字符串中, 与`char`变量的**"加法"`+`**就是将这个字符拼接到字符串中。
+- 字符串(`String`)不是基本数据类型, 虽然它的用法看上去像极了基本数据类型。可以认为字符串是使用`char`类型组装出来的类型。
+- 可以对字符串(`String`)进行拼接(加法(`+`))操作, 完全是因为Java对字符串进行了**"特殊处理"**。
+- 字符串(`String`)必须用双引号括起来, 无论长度是`0`, 是`1`, 还是更长。
+- 字符串(`String`)中可以包含任何字符。
+- 使用字符串之前必须要给它赋值, 如果不知道赋什么值, 就给它赋值空字符串(`""`)。
+- 字符串(`String`)和基本变量之间的加法操作是将**基本变量转换为字符串**拼接起来。
+
+------
+
+### **转义符**——看不见写得出
+- `char`类型变量可以代表任何一个字符。
+- **转义符**表:
+
+| 转义符 | 代表的字符 | 转义符 | 代表的字符 |
+| --- | --- | --- | --- |
+| \b | 退格 | \f | 换页符 |
+| \t | 制表符 | \" | 双引号 |
+| \n | 换行符 | \' | 单引号 |
+| \r | 回车符 | \\ | 反斜杠 |
+
+- 转义字符的使用:
+```java
+package HelloWorld;
+
+public class ChangeMeeting {
+    public static void main(String[] args) {
+        char charStringQuote = '\'';
+        char charNewLine = '\n';
+        char charDoubleQuotation = '"';
+        System.out.print(charStringQuote);
+        System.out.print(charNewLine);
+        System.out.print(charDoubleQuotation);
+    }
+}
+```
+- 运行结果:
+```java
+'
+
+"
+```
+- 程序首先向控制台输出了一个单引号(`charStringQuote`的值), 然后换了一行(`charNewLine`的值), 最后输出了一个双引号(`charDoubleQuote`的值)。
+- 下面是**转义符**在`String`中的使用。
+```java
+package HelloWorld;
+
+public class ChangeMeaningInString {
+    public static void main(String[] args) {
+        String twoLines = "这是第一行字符串\r\n这是第二行字符串";
+        System.out.println(twoLines);
+    }
+}
+```
+- 运行结果:
+```java
+这是第一行字符串
+这是第二行字符串
+
+```
+- 转义符都是以反斜杠`\`开头的, 这是转义符的标志。
+```java
+String twoLines = "\x这是第一行字符串\r\n这是第二行字符串";
+```
+- 这样就会报错:
+```java
+ChangeMeaningInString:3: 非法转义符
+			String twoLines = "\x这是第一行字符串\r\n这是第二行字符串";
+							^
+1 错误
+```
+- 如果想给一个字符赋值为反斜杠`\`, 或者想在字符串(`String`)中包含一个反斜杠字符`\`, 那么就需要使用反斜杠的转义符`\\`。
+- Java为一些特殊字符提供了转义符。这些特殊的字符有些不便书写在源程序中(如换页符、退格等), 有些会造成Java源程序有歧义(例如双引号、单引号、反斜杠等)。
+- 虽然写了两个字符, 但是Java会将转义符转换成它所对应的字符, 所以最终还是一个字符。
+- 当字符或者字符串中出现反斜杠时, 就意味着要使用转义符。如果反斜杠和其后面的字符无法组成一个合法的转义符, Java编译器将会给出"非法转义字符错误"。
+
+------
+
+## Java中的程序执行流程：
+### 顺序执行:
+- 以上所写的程序代码无一例外的都是从`main()`方法第一行开始执行, 直到`main()`方法的最后一行。
+```java
+package HelloWorld;
+
+public class SequenceOrder {
+    public  static void main(String[] args) {
+        double price = 5;
+        double amount = 11;
+        double totalCost = price * amount;
+        System.out.println(totalCost);
+    }
+}
+```
+- 运行结果:
+```java
+55.0
+
+```
+- 程序执行从`main()`方法的第一行`double price = 5;`开始执行, 一直到`main()`方法的最后一行`System.out.println(totalCost);`。然后执行结束, 也就自动退出了。
+
+------
+
+### 使用`if-else`让程序懂得判断
+- 以上的程序代码是顺序的一行行执行。如果程序中需要根据条件来判断一段代码是否执行, 应该怎么实现了?
+#### `if`语句:
+```java
+package HelloWorld;
+
+public class PriceAndAmount {
+    public static void main(String[] args) {
+        int price = -5;
+        int amount = -10;
+        if(price > 0 && amount > 0) {
+            int totalCost = price * amount;
+            System.out.println(totalCost);
+        }
+    }
+}
+```
+- 运行结果:
+```java
+```
+- 运行结果没有打印`totalCost`, 与上面代码不同的是使用了`if`语句`if(price > 0 && amount > 0)`。
+- 正是这个`if`语句让程序的执行流程发生了跳转。
+- `if`语句的结构:
+
+![if][1]
+
+- `if`语句首先就是`if`开头。`if`是Java中的关键字, 用来标识`if`语句的开始。
+- 紧接着是一个用括号括住的`boolean`表达式(或者是一个`boolean`变量)。这个表达式就是`if`语句的条件表达式。
+- 最后一对大括号以及其内部的代码是if语句的主体, 或者可以称之为`if`代码块。它可以是`0`行到多行代码。
+- 当`boolean`表达式的值为`true`的时候, `if`语句的代码块就会被执行; 为`false`的时候将不会被执行。
+- `if`语句的执行流程:
+
+![if_flow_chart][2]
+
+- 所以上面代码中的`if`语句的完整内容如下:
+```java
+if(price > 0 && amount > 0) {
+	int totalCost = price * amount;
+	System.out.println(totalCost);
+}
+```
+- `if`语句中的条件表达式是`"price>0 && amount>0"`。
+- 表达式的意义是, 只有在`price`和`amount`两个变量的值都大于`0`的时候, 计算结果才是`true`, 否则, 计算结果就是`false`。
+- `if`语句的代码块:
+```java
+{
+	int totalCost = price * amount;
+	System.out.println(totalCost);
+}
+```
+
+  [1]: ./images/if.png "if"
+  [2]: ./images/if_flow_chart.png "if_flow_chart"
