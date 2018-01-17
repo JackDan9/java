@@ -1109,6 +1109,97 @@ int b = 10;
 - `else`需要配合`if`使用, 不能单独使用。`else`语句块执行的条件是`if-else`语句的条件表达式值为`false`。也就是说, `if`语句块与`else`语句块有且只有一个执行。
 - `else`语句块中如果只有一个语句, 可以省略`else`语句块的大括号。但是会降低程序代码的可读性。
 
+#### `if-else`的语句嵌套：
+```java
+package HelloWorld;
+
+public class CountScrip {
+    public static void main(String[] args) {
+        int totalCost = 350;
+        if(totalCost < 100) {
+            System.out.println("购物金额不足100元, 不赠送抵价卷!");
+        } else {
+            if(totalCost <= 500) {
+                System.out.println("购物金额满100元, 赠送55元抵价卷!");
+            } else {
+                System.out.println("购物金额满500元, 赠送155元抵价卷!");
+            }
+        }
+    }
+}
+```
+- 运行结果:
+```java
+购物金额满100元, 赠送55元抵价卷!
+
+```
+- 如果`else`的代码块只有一个语句块的时候, 可以省略这个代码块的大括号。
+```java
+package HelloWorld;
+
+public class NewCountScrip {
+    public static void main(String[] args) {
+        int totalCost = 350;
+        if(totalCost < 100) {
+            System.out.println("购物金额不足100元, 不赠送抵价卷!");
+        } else if(totalCost <= 500) {
+            System.out.println("购物金额满100元, 赠送55元抵价卷!");
+        } else {
+            System.out.println("购物金额满500元, 赠送155元抵价卷!");
+        }
+    }
+}
+```
+- 运行结果:
+```java
+购物金额满100元, 赠送55元抵价卷!
+
+```
+- 去掉大括号的程序代码的结构和流程更清晰了。大括号的匹配也更加的明白了。
+- 当有程序需要根据多个条件执行不同的操作时, 可以使用多个`if-else`语句嵌套。
+- 有时候省略`else`语句块的大括号会让程序更易读。
+
+### 使用`while`语句进行循环:
+- 在现实中通常需要同一段代码循环(`loop`)执行多次, 这就需要用到`while`语句。
+
+#### 使用`while`语句:
+```java
+package HelloWorld;
+
+public class SettleAccountsUsingWhile {
+    public static void main(String[] args) {
+        int times = 5;
+        while (times > 0) {
+            int price = 5;
+            int amount = 10;
+            if (price > 0 && amount > 0) {
+                int totalCost = price * amount;
+                System.out.println(totalCost);
+            } else {
+                System.out.println("price和amount的值必须都大于0, 否则无法计算totalCost");
+            }
+            times = times - 1;
+        }
+        System.out.println("while语句执行结束。结账员可以休息一下了");
+    }
+}
+```
+- 运行结果:
+```java
+50
+50
+50
+50
+50
+while语句执行结束。结账员可以休息一下了
+
+```
+- `while`语句的语法:
+	- `while`语句可以根据一个`boolean`表达式的值来将一段代码执行`0`次到无数次, `while`的意思就是**"当......时"**。
+- 与`if`语句一样, `while`也是`Java`中的关键字, 用来标示`while`语句的开始。
+
+
+
   [1]: ./images/if.png "if"
   [2]: ./images/if_flow_chart.png "if_flow_chart"
   [3]: ./images/if-else.png "if-else"
