@@ -928,6 +928,7 @@ public class SequenceOrder {
 
 ### 使用`if-else`让程序懂得判断
 - 以上的程序代码是顺序的一行行执行。如果程序中需要根据条件来判断一段代码是否执行, 应该怎么实现了?
+
 #### `if`语句:
 ```java
 package HelloWorld;
@@ -976,6 +977,139 @@ if(price > 0 && amount > 0) {
 	System.out.println(totalCost);
 }
 ```
+- 在`if`代码块中, 计算了`totalCost`的值, 并将计算的值输出到控制台上。
+- 由于`if`语句中的条件表达式是`"price>0 && amount>0"`的计算结果是`false`, 那么`if`语句的主体部分的代码就不会被执行, 所以执行结果是什么都没有输出。
+```java
+package HelloWorld;
+
+public class OneLine {
+    public static void main(String[] args) {
+        int a = 9;
+        if (a > 0)
+            System.out.println("if语句代码块被执行了!");
+    }
+}
+```
+- 运行结果:
+```java
+if语句代码块被执行了!
+
+```
+- 如果`if`语句的代码块只有一个语句, 可以省略`if`语句代码块的大括号。
+- 但是写程序的目的不仅仅是程序不出错的执行程序代码, 程序规范以及代码的可阅读性也要注重。
+```java
+package HelloWorld;
+
+public class OneLine {
+    public static void main(String[] args) {
+        int a = 9;
+        if (a > 0) {
+            System.out.println("if语句代码块被执行了!");
+        }
+    }
+}
+```
+- 这样的代码更易于去阅读，所以省略花括号并不是一个好的习惯。
+- `if`语句的格式是`if`关键字+`if`条件表达式+`if`语句代码块。当`if`语句表达式的值为`true`时, `if`语句代码块就会被执行; 如果值为`false`, `if`语句代码块将会被跳过。无论`if`语句是否被执行, `if`语句执行过后程序将继续向下执行。
+- `if`语句中, 如果代码块只有一个语句, 那么可以省略大括号`{}`, 但是不建议这么做。
+
+#### `if`语句的嵌套:
+- `if`语句的代码块可以是任何符合`Java`语法的代码, 当然也可以包含另外一个`if`语句。
+```java
+package HelloWorld;
+
+public class IfNesting {
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 2;
+        if(a > 0) {
+            if(b > a) {
+                System.out.println("a的值大于0");
+                System.out.println("b的值大于a");
+            }
+        }
+    }
+}
+```
+- 运行结果:
+```java
+a的值大于0
+b的值大于a
+
+```
+- 上例中如果第二个`if`语句能够执行则说明`a`的值已经大于`0`了。
+- `if`语句的嵌套可以有很多层, 每次多一层嵌套, 就会多出一层大括号, 也会相应地增加**缩进**, 程序读起来也就更困难一点。
+```java
+package HelloWorld;
+
+public class IfNesting {
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 2;
+        if(a > 0) 
+            if(b > a) {
+                System.out.println("a的值大于0");
+                System.out.println("b的值大于a");
+            }
+    }
+}
+```
+- `if`语句的代码块只有一个语句时, 可以省略其花括号, 但是这样的代码读起来**不容易分清**代码块的结束点。
+- `if`语句代码块中可以是任何符合`Java`语法规范的代码。
+- `if`语句是一个多行的语句。`Java`中一个语句可以有多行。
+- `if`语句代码块的括号可以用来帮助识别代码块的开始和结束, 最好不要省略, 即使`if`语句的代码块只有一个语句。
+
+#### `if-else`语句:
+- 一个程序运行结束不输出任何内容, 总让人觉得程序结束得有点奇怪或者就是不知道程序是否结束。
+- 作为一个程序, 如果遇到数据出错而不能够正确执行, 那么把错误输出来是一个好习惯。
+- 这就需要介绍`if`语句的搭档`else`了。
+- `else`:
+	- `else`也是`Java`中的关键字, 它只能和`if`语句进行配合使用, 用来处理`if`条件表达式为`false`的情况。
+- `Java`语法中, `else`后面也会跟一个用大括号括起来的代码块。这个代码块执行的条件是`if`语句中的条件表达式的值为`false`, 也就是`if`语句没有执行。
+- `if-else`语句结构图:
+
+![if-else][3]
+
+- `if-else`的执行流程图与`if`语句类似, 如下:
+
+![if-else_flow_chart][4]
+
+- `if-else`语句的例程:
+```java
+package HelloWorld;
+
+public class PriceAndAmountAndIfElse {
+    public static void main(String[] args) {
+        int price = -5;
+        int amount = -10;
+        if(price > 0 && amount > 0) {
+            int totalCost = price * amount;
+            System.out.println(totalCost);
+        } else {
+            System.out.println("price和amount的值都必须大于0, 否则无法计算totalCost");
+        }
+    }
+}
+```
+- 运行结果:
+```java
+price和amount的值都必须大于0, 否则无法计算totalCost
+
+```
+- `if-else`流程是结构最简单的非顺序执行流程了。
+- 上例中, 程序不再是顺序执行, 而是发生了跳转。跳过的程序代码是不会执行的。
+```
+int a = 5;
+int b = 10;
+```
+- 这样的变量声明放在上例代码中, `if`语句中的条件表达式值为`true`了, 所以`if`语句块会被执行, 而`else`语句块会被跳过。然后达到`main()`方法结尾处, 程序运行结束。
+- 同样, 如果`else`程序块只有一个语句, 那么`Java`语法也是允许将`else`语句块中的大括号省略的。但是程序代码的可读性也会变差。
+- `else`语句块中也可以包含任何符合`Java`语法的代码。
+- 如`if-else`的结构图所示, `if-else`语句执行过后, 程序继续顺序执行下面的代码。
+- `else`需要配合`if`使用, 不能单独使用。`else`语句块执行的条件是`if-else`语句的条件表达式值为`false`。也就是说, `if`语句块与`else`语句块有且只有一个执行。
+- `else`语句块中如果只有一个语句, 可以省略`else`语句块的大括号。但是会降低程序代码的可读性。
 
   [1]: ./images/if.png "if"
   [2]: ./images/if_flow_chart.png "if_flow_chart"
+  [3]: ./images/if-else.png "if-else"
+  [4]: ./images/if-else_flow_chart.png "if-else_flow_chart"

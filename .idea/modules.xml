@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IdeaProjects.iml" filepath="$PROJECT_DIR$/IdeaProjects.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JackDan-SSM/JackDan-SSM.iml" filepath="$PROJECT_DIR$/JackDan-SSM/JackDan-SSM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JavaTest/JavaTest.iml" filepath="$PROJECT_DIR$/JavaTest/JavaTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LibraryManager/LibraryManager.iml" filepath="$PROJECT_DIR$/LibraryManager/LibraryManager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jackdan9-spring/jackdan9-spring.iml" filepath="$PROJECT_DIR$/jackdan9-spring/jackdan9-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jackdan_ssm/JackDan-SSM.iml" filepath="$PROJECT_DIR$/jackdan_ssm/JackDan-SSM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jackdan_library_manager/LibraryManager.iml" filepath="$PROJECT_DIR$/jackdan_library_manager/LibraryManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jackdan9_spring/jackdan9-spring.iml" filepath="$PROJECT_DIR$/jackdan9_spring/jackdan9-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaTest/jackdan_java_test.iml" filepath="$PROJECT_DIR$/JavaTest/jackdan_java_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/jackdan_spring/jackdan_spring.iml" filepath="$PROJECT_DIR$/jackdan_spring/jackdan_spring.iml" />
     </modules>
   </component>
